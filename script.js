@@ -36,6 +36,13 @@ const CONFIG = {
 // ===================================================================================
 // AKHIR DARI PUSAT PENGATURAN
 // ===================================================================================
+// --- FUNGSI BARU UNTUK PRELOAD GAMBAR ---
+const preloadImages = (imageUrls) => {
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = `/${url}`;
+    });
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -678,6 +685,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!imgElement || !prevBtn || !nextBtn || !dotsContainer || !imagesArray || imagesArray.length === 0) {
             return;
         }
+
+        preloadImages(imagesArray);
 
         let currentImageIndex = 0;
 
