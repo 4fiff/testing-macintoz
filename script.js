@@ -433,7 +433,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const addToCartBtn = document.getElementById('detail-add-to-cart-btn');
         
         // Fungsi utama untuk memperbarui seluruh tampilan berdasarkan pilihan
-        function updateDisplay() {
+        function updateDisplay(options = {}) {
+            const { isColorChange = false } = options;
             // Cari varian yang cocok dengan semua pilihan saat ini
             let currentVariant = product.variants.find(v => {
                 const colorMatch = !v.color || v.color === selectedColor;
@@ -489,8 +490,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
             
-            if (product.images[selectedColor || 'Default']) {
-                setupImageSlider(product.images[selectedColor || 'Default']);
+            if (isColorChange) {
+                if (product.images[selectedColor || 'Default']) {
+                    setupImageSlider(product.images[selectedColor || 'Default']);
+                }
             }
             
             if (selectedColorNameEl) selectedColorNameEl.textContent = selectedColor || '';
@@ -537,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const firstAvailable = availableVariantsForColor[0];
                     selectedStorage = firstAvailable.storage;
                     selectedFeature = firstAvailable.feature;
-                    updateDisplay();
+                    updateDisplay({ isColorChange: true });
                 });
                 colorSelector.appendChild(swatch);
             });
@@ -672,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         createVariantSelectors();
-        updateDisplay();
+        updateDisplay({ isColorChange: true });
     }
 
     // --- FUNGSI SLIDER TERPUSAT ---
